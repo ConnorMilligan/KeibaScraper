@@ -92,6 +92,7 @@ class TestHorseLoader(unittest.TestCase):
             'weight_diff': 0,
             'prize': 3800.0
         }
+        self.maxDiff = None
         self.assertDictEqual(self.valid_result[1], expected_history)
 
     def test_overseas_race_parsing(self):
