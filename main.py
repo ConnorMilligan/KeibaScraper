@@ -1,17 +1,18 @@
 import keibascraper
 import json
 import os
+import time
 
 if __name__ == "__main__":
-    os.makedirs("data/horses", exist_ok=True)
     race_ids = keibascraper.race_list(2025, 11)
+    start_time = time.time()
 
     for race_id in race_ids:
         race_info, entrylist = keibascraper.load('entry', race_id)
 
         # write Race info and Entry list to json files
-        # data/race_{id}/race.json
-        # data/race_{id}/entry_{entry_id}.json
+        # data/races/race_{id}/race.json
+        # data/races/race_{id}/entry_{entry_id}.json
         race_dir = f"data/races/race_{race_id}"
         horse_dir = f"data/horses"
 
@@ -37,6 +38,11 @@ if __name__ == "__main__":
             # skip entry if id contains text "None"
             if "None" in entry['id']:
                 continue
+
+            # Skip entry if already exists
+            if os.path.exists(f"{race_dir}/entry_{entry['id']}.json"):
+                print(f"[RACE {race_id}] Entry {entry['horse_number']} data already exists. Skipping...")
+                continue
             entry_id = entry['id']
             horse_number = entry['horse_number']
             print(f"[RACE {race_id}] Writing entry info for entry {horse_number}...")
@@ -44,17 +50,28 @@ if __name__ == "__main__":
                 json.dump(entry, f, ensure_ascii=False, indent=4)
             
             # save horse info if not already present
-            # SAVE HORSE AND HISTORY
+            # data/horses/horse_{id}/horse.json
+            # data/horses/horse_{id}/history.json
             horse_id = entry['horse_id']
-            horse_file = f"{horse_dir}/horse_{horse_id}.json"
-            if not os.path.exists(horse_file):
-                print(f"Loading horse info for horse {horse_id}")
-                horse_info, horse_result = keibascraper.load('horse', horse_id)
-                with open(horse_file, "w", encoding="utf-8") as f:
-                    json.dump(horse_info, f, ensure_ascii=False, indent=4)
+            horse_path = f"{horse_dir}/horse_{horse_id}"
+            os.makedirs(horse_path, exist_ok=True)
+            horse_info, horse_history = keibascraper.load('horse', horse_id)
+
+            if not os.path.exists(f"{horse_path}/horse.json"):
+                print(f"[HORSE {horse_id}] Writing horse info...")
+                with open(f"{horse_path}/horse.json", "w", encoding="utf-8") as f:
+                    json.dump(horse_info[0], f, ensure_ascii=False, indent=4)
+
+            if not os.path.exists(f"{horse_path}/history.json"):
+                print(f"[HORSE {horse_id}] Writing horse history...")
+                with open(f"{horse_path}/history.json", "w", encoding="utf-8") as f:
+                    json.dump(horse_history, f, ensure_ascii=False, indent=4)
 
 
+    end_time = time.time()
+    elapsed = end_time - start_time
 
+    time_taken_minutes = int(elapsed // 60)
+    time_taken_seconds = elapsed % 60
 
-    
-    # write to a json file for inspection
+    print(f"Data scraping completed in {time_taken_minutes}:{time_taken_seconds:05.2f} seconds.")
