@@ -186,9 +186,13 @@ class CalendarLoader:
         self.month = month
 
     def load(self):
-        url = f"https://sports.yahoo.co.jp/keiba/schedule/monthly?{self.year}?month={self.month}"
+        url = f"https://sports.yahoo.co.jp/keiba/schedule/monthly?year={self.year}&month={self.month}"
+        print(url)
         content = self.load_contents(url)
         race_ids = parse_html('cal', content)
+                # write content to a file for debugging
+        with open(f"calendar_{self.year}_{self.month}.html", "w", encoding="utf-8") as f:
+            f.write(content)
         return self.expand_race_ids(race_ids)
 
     def load_contents(self, url):
