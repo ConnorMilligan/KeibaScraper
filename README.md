@@ -1,7 +1,6 @@
 # Keiba Scraper
 
-[![Test](https://github.com/new-village/keibascraper/actions/workflows/test.yaml/badge.svg?branch=main)](https://github.com/new-village/keibascraper/actions/workflows/unittest.yaml)
-[![PyPI](https://badge.fury.io/py/keibascraper.svg)](https://badge.fury.io/py/keibascraper)
+[![Test](https://github.com/ConnorMilligan/KeibaScraper/actions/workflows/test.yaml/badge.svg?branch=main)](https://github.com/ConnorMilligan/keibascraper/actions/workflows/unittest.yaml)
 
 **keibascraper** is a Python library designed to parse data from [netkeiba.com](https://www.netkeiba.com/), a prominent Japanese horse racing website. It allows users to programmatically extract detailed information about races, entries, results, odds, and horses. Please note that depending on your usage, this may impose a significant load on netkeiba.com.
 
