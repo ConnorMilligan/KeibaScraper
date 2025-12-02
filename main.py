@@ -6,8 +6,12 @@ import time
 if __name__ == "__main__":
     race_ids = keibascraper.race_list(2025, 11)
     start_time = time.time()
+    print(f"Found {len(race_ids)} races in total.")
 
-    for race_id in race_ids:
+    for i, race_id in enumerate(race_ids):
+        if os.path.exists(f"data/races/race_{race_id}/race.json"):
+            print(f"[RACE {race_id}] Data already exists. Skipping...")
+            continue
         race_info, entrylist = keibascraper.load('entry', race_id)
 
         # write Race info and Entry list to json files
@@ -17,7 +21,10 @@ if __name__ == "__main__":
         horse_dir = f"data/horses"
 
         os.makedirs(race_dir, exist_ok=True)
-        
+
+        progress = (i + 1) / len(race_ids) * 100
+        print(f"Progress: {i+1}/{len(race_ids)} ({progress:.2f}%) races processed.")
+
         print(f"[RACE {race_id}] Writing race info...")
         with open(f"{race_dir}/race.json", "w", encoding="utf-8") as f:
             json.dump(race_info, f, ensure_ascii=False, indent=4)
@@ -45,7 +52,7 @@ if __name__ == "__main__":
                 continue
             entry_id = entry['id']
             horse_number = entry['horse_number']
-            print(f"[RACE {race_id}] Writing entry info for entry {horse_number}...")
+            print(f"[RACE {race_id}] Writing entry info for entry {horse_number}.")
             with open(f"{race_dir}/entry_{entry_id}.json", "w", encoding="utf-8") as f:
                 json.dump(entry, f, ensure_ascii=False, indent=4)
             
