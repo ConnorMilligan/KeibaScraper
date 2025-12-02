@@ -159,7 +159,7 @@ class HorseLoader(BaseLoader):
         try:
             # If you know a selector that only appears after JS runs, pass it as wait_selector.
             # e.g. wait_selector='.HorseData' (replace with real selector) to be stricter.
-            content = self.render_with_playwright(url, wait_selector=None)
+            content = self.render_with_playwright(url, wait_selector=None, timeout=30000)
         except RuntimeError as e:
             # Log the Playwright failure and fallback so you can inspect playwright_error.log
             print(f"Playwright render failed: {e}. Falling back to requests for horse page.")

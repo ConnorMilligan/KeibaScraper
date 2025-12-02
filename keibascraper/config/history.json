@@ -147,44 +147,44 @@
         },{
             "col_name": "condition",
             "alias": "馬場",
-            "selector": "td:nth-of-type(16)",
+            "selector": "td:nth-of-type(17)",
             "var_type": "text",
             "reg" : "良|稍|稍重|重|不良"
         },{
             "col_name" : "rap_time",
             "alias": "タイム",
-            "selector" : "td:nth-of-type(18)",
+            "selector" : "td:nth-of-type(19)",
             "pre_func": {"name": "time_to_seconds", "args": ["rap_time"]},
             "var_type" : "real",
             "reg" : "(\\d+.\\d+)"    
         },{
             "col_name" : "passage_rank",
             "alias": "通過順",
-            "selector" : "td:nth-of-type(21)",
+            "selector" : "td:nth-of-type(22)",
             "var_type" : "text",
             "reg" : "\\d{1,2}-\\d{1,2}-\\d{1,2}-\\d{1,2}|\\d{1,2}-\\d{1,2}-\\d{1,2}|\\d{1,2}-\\d{1,2}|\\d{1,2}"
         },{
             "col_name" : "last_3f",
             "alias": "後3F",
-            "selector" : "td:nth-of-type(23)",
+            "selector" : "td:nth-of-type(24)",
             "var_type" : "real",
             "reg" : "(\\d+.\\d+)"
         },{
             "col_name": "weight",
             "alias": "馬体重",
-            "selector": "td:nth-of-type(24)",
+            "selector": "td:nth-of-type(25)",
             "var_type": "integer",
             "reg": "(\\d+)\\([+-]?\\d*\\)"
         },{
             "col_name": "weight_diff",
             "alias": "増減",
-            "selector": "td:nth-of-type(24)",
+            "selector": "td:nth-of-type(25)",
             "var_type": "integer",
             "reg": "\\d+\\(([+-]?\\d+)\\)"
         },{
             "col_name": "prize",
             "alias": "賞金（万円）",
-            "selector": "td:nth-of-type(28)",
+            "selector": "td:nth-of-type(29)",
             "post_func": {"name": "zero_fill", "args": ["prize"]},
             "var_type": "real",
             "reg" : "\\d+,\\d+.\\d+|\\d+.\\d+"
