@@ -7,9 +7,10 @@ if __name__ == "__main__":
     race_ids = keibascraper.race_list(2025, 11)
     start_time = time.time()
     print(f"Found {len(race_ids)} races in total.")
+    data_dir = "../keiba/data"
 
     for i, race_id in enumerate(race_ids):
-        if os.path.exists(f"data/races/race_{race_id}/race.json"):
+        if os.path.exists(f"{data_dir}/races/race_{race_id}/race.json"):
             print(f"[RACE {race_id}] Data already exists. Skipping...")
             continue
         race_info, entrylist = keibascraper.load('entry', race_id)
@@ -17,8 +18,8 @@ if __name__ == "__main__":
         # write Race info and Entry list to json files
         # data/races/race_{id}/race.json
         # data/races/race_{id}/entry_{entry_id}.json
-        race_dir = f"data/races/race_{race_id}"
-        horse_dir = f"data/horses"
+        race_dir = f"{data_dir}/races/race_{race_id}"
+        horse_dir = f"{data_dir}/horses"
 
         os.makedirs(race_dir, exist_ok=True)
 
